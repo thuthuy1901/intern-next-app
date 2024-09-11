@@ -13,7 +13,7 @@ const HeaderPostPage = memo(() => {
         <header className="h-20 bg-white flex justify-end items-center gap-x-5 px-20">
             <div className="flex items-center gap-x-2">
                 <Image src={iconUser} alt="iconUser" />
-                <p>{name}</p>
+                <p className="mb-0">{name}</p>
             </div>
             <button onClick={() => onLogout()}>Logout</button>
         </header>
