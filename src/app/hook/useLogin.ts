@@ -13,7 +13,7 @@ const useLogin = () => {
     const { notifySuccess, notifyError } = useToast();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const onLogin = useCallback(async (username: string) => {
+    const onLogin = useCallback(async (username: string, lng: string) => {
         setIsLoading(true);
         try {
             const response = await axios.post(`${BASE_API}/auth/login`, {
@@ -23,11 +23,11 @@ const useLogin = () => {
             if (response.data.accessToken) {
                 const { accessToken, refreshToken } = response.data;
 
+                router.push(`${lng}/post`);
                 Cookies.set('accessToken', accessToken);
                 Cookies.set('refreshToken', refreshToken);
                 Cookies.set('username', username);
 
-                router.push('/post');
                 notifySuccess('Login was successful!');
                 setUser(username);
             } else {

@@ -4,8 +4,8 @@ import Cookies from 'js-cookie';
 
 const useLogout = () => {
     const router = useRouter();
-    const onLogout = useCallback(() => {
-        router.push('/');
+    const onLogout = useCallback((lng: string) => {
+        router.push(`/${lng}`);
         Cookies.remove('accessToken');
     }, []);
 
