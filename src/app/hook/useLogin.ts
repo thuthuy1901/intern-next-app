@@ -5,6 +5,7 @@ import useToast from './useToast';
 import { BASE_API } from '../service/resquest';
 import { useAtom } from 'jotai';
 import { username } from '../store';
+import Cookies from 'js-cookie';
 
 const useLogin = () => {
     const router = useRouter();
@@ -22,12 +23,13 @@ const useLogin = () => {
             if (response.data.accessToken) {
                 const { accessToken, refreshToken } = response.data;
 
-                localStorage.setItem('accessToken', accessToken);
-                localStorage.setItem('refreshToken', refreshToken);
-                localStorage.setItem('username', username);
+                Cookies.set('accessToken', accessToken);
+                Cookies.set('refreshToken', refreshToken);
+                Cookies.set('username', username);
+
+                router.push('/post');
                 notifySuccess('Login was successful!');
                 setUser(username);
-                router.push('/post');
             } else {
                 throw new Error('Login fail');
             }

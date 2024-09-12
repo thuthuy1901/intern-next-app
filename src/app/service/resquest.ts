@@ -1,25 +1,26 @@
 import TokenManager, { injectBearer } from 'brainless-token-manager';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export const BASE_API = 'https://api-test-web.agiletech.vn';
 
 const tokenManager = new TokenManager({
     getAccessToken: async () => {
-        const token = localStorage.getItem('accessToken');
+        const token = Cookies.get('accessToken');
         return `${token}`;
     },
     getRefreshToken: async () => {
-        const refreshToken = localStorage.getItem('refreshToken');
+        const refreshToken = Cookies.get('refreshToken');
 
         return `${refreshToken}`;
     },
     onInvalidRefreshToken: () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
     },
 
     executeRefreshToken: async () => {
-        const refreshToken = localStorage.getItem('refreshToken');
+        const refreshToken = Cookies.get('accessToken');
 
         if (!refreshToken) {
             return {
@@ -41,8 +42,8 @@ const tokenManager = new TokenManager({
     },
     onRefreshTokenSuccess: ({ token, refresh_token }) => {
         if (token && refresh_token) {
-            localStorage.setItem('accessToken', token);
-            localStorage.setItem('refreshToken', refresh_token);
+            Cookies.set('accessToken', token);
+            Cookies.set('refreshToken', refresh_token);
         }
     },
 });
