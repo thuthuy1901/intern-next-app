@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { fallbackLng, languages } from './app/i18n/settings';
+import { fallbackLng, languages } from './i18n/settings';
 import acceptLanguage from 'accept-language';
 
 acceptLanguage.languages(languages);
@@ -14,7 +14,7 @@ export function middleware(request: NextRequest) {
     if (!lng) lng = fallbackLng;
 
     if (request.nextUrl.pathname.startsWith('/')) {
-        return NextResponse.redirect(new URL(`/${lng}`, request.url));
+        return NextResponse.redirect(new URL(`/${lng}/login`, request.url));
     }
 
     if (!accessToken) {

@@ -1,6 +1,6 @@
 'use client';
-import { useLogin } from '@/app/hook';
-import { useTranslation } from '@/app/i18n';
+import { useLogin } from '@/hook';
+import { useTranslation } from '@/i18n';
 import { Button, Form, Input } from 'antd';
 import { useEffect, useState } from 'react';
 
@@ -26,7 +26,7 @@ const LayoutLogin = ({ lng }: { lng: string }) => {
     }, [lng]);
 
     return (
-        <>
+        <section className="min-w-screen min-h-screen bg-background flex flex-col justify-center items-center">
             <h1 className="text-[32px] leading-10">{t?.('title')}</h1>
             {isLoading && <p>Loading...</p>}
             <Form name="simple_form" onFinish={onFinish} layout="vertical">
@@ -53,7 +53,7 @@ const LayoutLogin = ({ lng }: { lng: string }) => {
                     </Button>
                 </Form.Item>
             </Form>
-        </>
+        </section>
     );
 };
 

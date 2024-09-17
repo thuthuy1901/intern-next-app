@@ -1,8 +1,5 @@
 import HeaderPostPage from './component/HeaderPostPage';
 import BodyPostPage from './component/BodyPostPage';
-import { useTranslation } from '@/app/i18n';
-import { useAtom } from 'jotai';
-import { getLang } from '@/app/store';
 
 interface PageProps {
     params: {

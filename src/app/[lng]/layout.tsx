@@ -3,7 +3,7 @@ import './globals.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { dir } from 'i18next';
-import { languages } from '../i18n/settings';
+import { languages } from '../../i18n/settings';
 
 export async function generateStaticParams() {
     return languages.map((lng) => ({ lng }));
@@ -29,6 +29,7 @@ export default async function RootLayout({
         <html lang={lng} dir={dir(lng)}>
             <head />
             <body className="antialiased bg-background">
+                <h1>{lng}</h1>
                 <ToastContainer />
                 <main>{children}</main>
             </body>

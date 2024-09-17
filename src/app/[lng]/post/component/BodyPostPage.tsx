@@ -1,10 +1,11 @@
 'use client';
-import { axiosInstant, tokenManagerInstance } from '@/app/service/resquest';
-import { allInfoPost } from '@/app/store';
+import { allInfoPost } from '@/store/jotai';
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import ListPost from './ListPost';
-import { useTranslation } from '@/app/i18n';
+import { useTranslation } from '@/i18n';
+import { axiosInstant, tokenManagerInstance } from '@/api/resquest';
+import { API_PATH } from '@/api/constant';
 
 const BodyPostPage = ({ lng }: { lng: string }) => {
     const [_, setAllInfoPost] = useAtom(allInfoPost);
@@ -12,7 +13,7 @@ const BodyPostPage = ({ lng }: { lng: string }) => {
         try {
             const respond = await tokenManagerInstance(
                 axiosInstant.get,
-                '/posts'
+                API_PATH.GET_POSTS
             );
             setAllInfoPost(respond.data);
         } catch (error) {

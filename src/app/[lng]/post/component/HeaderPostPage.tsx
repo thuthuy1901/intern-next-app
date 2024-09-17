@@ -1,11 +1,11 @@
 'use client';
 import { memo, useEffect, useState } from 'react';
-import iconUser from '../../../assets/userIcon.png';
-import useLogout from '@/app/hook/useLogout';
+import iconUser from '../../../../../public/img/userIcon.png';
 import Image from 'next/image';
 import { useAtom } from 'jotai';
-import { username } from '@/app/store';
-import { useTranslation } from '@/app/i18n';
+import { useTranslation } from '@/i18n';
+import useLogout from '@/hook/useLogout';
+import { username } from '@/store/jotai';
 
 const HeaderPostPage = memo(({ lng }: { lng: string }) => {
     const { onLogout } = useLogout();
