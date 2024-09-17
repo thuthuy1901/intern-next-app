@@ -14,7 +14,7 @@ const useLogin = () => {
     const { notifySuccess, notifyError } = useToast();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const onLogin = useCallback(async (username: string, lng: string) => {
+    const onLogin = useCallback(async (username: string) => {
         setIsLoading(true);
         try {
             const response = await axios.post(API_PATH.AUTH_LOGIN, {
@@ -24,7 +24,7 @@ const useLogin = () => {
             if (response.data.accessToken) {
                 const { accessToken, refreshToken } = response.data;
 
-                router.push(`${lng}/post`);
+                router.push(`/post`);
                 Cookies.set(Login.Access_Token, accessToken);
                 Cookies.set(Login.Refresh_Token, refreshToken);
                 Cookies.set(Login.Username, username);

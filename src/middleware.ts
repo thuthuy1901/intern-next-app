@@ -1,29 +1,23 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { fallbackLng, languages } from './i18n/settings';
-import acceptLanguage from 'accept-language';
+import { NextRequest } from 'next/server';
+import createMiddleware from 'next-intl/middleware';
 
-acceptLanguage.languages(languages);
+import { defaultLocale, localePrefix, locales, pathnames } from './config';
+
+const nextIntl = createMiddleware({
+    defaultLocale,
+    locales,
+    pathnames,
+    localePrefix,
+});
 
 export function middleware(request: NextRequest) {
-    const accessToken = request.cookies.get('accessToken')?.value;
-    let lng;
-
-    if (!lng) lng = acceptLanguage.get(request.headers.get('Accept-Language'));
-
-    if (!lng) lng = fallbackLng;
-
-    if (request.nextUrl.pathname.startsWith('/')) {
-        return NextResponse.redirect(new URL(`/${lng}/login`, request.url));
-    }
-
-    if (!accessToken) {
-        return NextResponse.redirect(new URL(`/${lng}/`, request.url));
-    }
-
-    return NextResponse.next();
+    return nextIntl(request);
 }
 
 export const config = {
-    matcher: ['/'],
+    matcher: [
+        '/',
+        '/(en|ko|id|ja|es)/:path*',
+        '/((?!_next|_vercel|.*\\..*).*)',
+    ],
 };

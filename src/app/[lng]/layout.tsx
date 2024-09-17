@@ -2,12 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { dir } from 'i18next';
-import { languages } from '../../i18n/settings';
-
-export async function generateStaticParams() {
-    return languages.map((lng) => ({ lng }));
-}
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 
 export const metadata: Metadata = {
     title: 'Next App',
@@ -25,13 +21,15 @@ export default async function RootLayout({
     children,
     params: { lng },
 }: RootLayoutProps) {
+    const messages = await getMessages();
     return (
-        <html lang={lng} dir={dir(lng)}>
+        <html lang={lng}>
             <head />
             <body className="antialiased bg-background">
-                <h1>{lng}</h1>
                 <ToastContainer />
-                <main>{children}</main>
+                <NextIntlClientProvider messages={messages}>
+                    {children}
+                </NextIntlClientProvider>
             </body>
         </html>
     );
